@@ -1,4 +1,6 @@
 DummyMinitest::Application.routes.draw do
+  resources :user2s
+
   resources :users
 
   # The priority is based upon order of creation:
