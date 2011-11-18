@@ -1,4 +1,4 @@
-require "minitest_helper"
+require "test_helper"
 
 class UserTest < MiniTest::Rails::Model
   it "#name returns first and last name" do
