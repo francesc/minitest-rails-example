@@ -1,14 +1,16 @@
 require "minitest_helper"
 
-class UserControllerTest < MiniTest::Rails::Controller
+class UsersControllerTest < MiniTest::Rails::Controller
+  fixtures :users
+
   setup do
-    @user = users(:one)
+    @user = users(:joe)
   end
 
   def test_index
     get :index
     assert_response :success
-    assert_not_nil assigns(:users)
+    assert assigns(:users)
   end
 
   def test_new

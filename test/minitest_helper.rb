@@ -3,16 +3,41 @@ require "minitest/rails"
 
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
+require "rails/test_help"
 
 class MiniTest::Rails::Spec
-
-  # Add methods to be used by all specs here...
-
+  include ActiveSupport::Testing::Assertions
 end
 
-# Uncomment to support fixtures in Model tests...
-# require "active_record/fixtures"
+require "active_record/fixtures"
+
+module MiniTest::Rails::Fixtures
+  def self.included(klass)
+    klass.class_eval do
+      include ActiveSupport::Testing::SetupAndTeardown
+      include ActiveRecord::TestFixtures
+      self.fixture_path = File.join(Rails.root, "test", "fixtures")
+    end
+  end
+end
+
 class MiniTest::Rails::Model
-  # include ActiveRecord::TestFixtures
-  # self.fixture_path = File.join(Rails.root, "test", "fixtures")
+  include MiniTest::Rails::Fixtures
+end
+
+require "action_controller/test_case"
+
+class MiniTest::Rails::Controller
+  include MiniTest::Rails::Fixtures
+  include ActionController::TestCase::Behavior
+
+  before do
+    klass = self.class.name.match(/((.*)Controller)/)[1].constantize
+
+    @controller = klass.new
+    @request    = ActionController::TestRequest.new
+    @response   = ActionController::TestResponse.new
+    @request.env['PATH_INFO'] = nil
+    @routes = Rails.application.routes
+  end
 end
