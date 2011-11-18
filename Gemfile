@@ -32,5 +32,6 @@ group :test, :development do
 end
 
 group :test do
+  gem 'minitest-matchers', '1.1.0.rc3', require: "minitest/matchers"
   gem 'capybara'
 end

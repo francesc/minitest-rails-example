@@ -45,8 +45,10 @@ end
 require "action_dispatch/testing/integration"
 
 require "capybara/rails"
+require "capybara/rspec/matchers"
 
 class MiniTest::Rails::Integration < MiniTest::Rails::Spec
   include MiniTest::Rails::Fixtures
   include Capybara::DSL
+  include Capybara::RSpecMatchers
 end

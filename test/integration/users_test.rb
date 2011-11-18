@@ -6,8 +6,8 @@ class UsersTest < MiniTest::Rails::Integration
   it "can view list of users" do
     visit "/"
 
-    assert page.has_content?("Joe")
-    assert page.has_content?("Jane")
+    page.must have_content("Joe")
+    page.must have_content("Jane")
   end
 
   it "can view empty list of users" do
@@ -15,14 +15,14 @@ class UsersTest < MiniTest::Rails::Integration
 
     visit "/"
 
-    refute page.has_content?("Destroy")
-    assert page.has_content?("No users found.")
+    page.wont have_content("Destroy")
+    page.must have_content("No users found.")
   end
 
   it "can add new user" do
     create_user "James", "Doe"
 
-    page.has_content?("User was successfully created.").must_equal true
+    page.must have_content("User was successfully created.")
     user = User.last
     user.first_name.must_equal "James"
     user.last_name.must_equal "Doe"
@@ -31,7 +31,7 @@ class UsersTest < MiniTest::Rails::Integration
   it "can't add new user with invalid data" do
     create_user "James", ""
 
-    page.has_content?("Last name can't be blank").must_equal true
+    page.must have_content("Last name can't be blank")
   end
 
   it "can edit user" do
@@ -39,7 +39,7 @@ class UsersTest < MiniTest::Rails::Integration
 
     update_user user, "New Joe", "New Doe"
 
-    page.has_content?("User was successfully updated.").must_equal true
+    page.must have_content("User was successfully updated.")
     user.reload
     user.first_name.must_equal "New Joe"
     user.last_name.must_equal "New Doe"
@@ -50,7 +50,7 @@ class UsersTest < MiniTest::Rails::Integration
 
     update_user user, "New Joe", ""
 
-    page.has_content?("Last name can't be blank").must_equal true
+    page.must have_content("Last name can't be blank")
   end
 
   it "can remove user" do
