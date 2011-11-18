@@ -41,3 +41,12 @@ class MiniTest::Rails::Controller
     @routes = Rails.application.routes
   end
 end
+
+require "action_dispatch/testing/integration"
+
+require "capybara/rails"
+
+class MiniTest::Rails::Integration < MiniTest::Rails::Spec
+  include MiniTest::Rails::Fixtures
+  include Capybara::DSL
+end

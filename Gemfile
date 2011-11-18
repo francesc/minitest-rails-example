@@ -30,3 +30,7 @@ gem 'jquery-rails'
 group :test, :development do
   gem 'minitest-rails', :path => "../minitest-rails"
 end
+
+group :test do
+  gem 'capybara'
+end
