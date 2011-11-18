@@ -28,11 +28,15 @@ gem 'jquery-rails'
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
 group :test, :development do
-  gem 'minitest-rails', :path => "../minitest-rails"
+  if Dir.exist? "../minitest-rails"
+    gem 'minitest-rails', path: "../minitest-rails"
+  else
+    gem 'minitest-rails'
+  end
 end
 
 group :test do
-  gem 'minitest-matchers', '1.1.0.rc3', require: "minitest/matchers"
-  gem 'valid_attribute', '~> 1.2'
+  gem 'minitest-matchers'
+  gem 'valid_attribute', git: "git://github.com/wojtekmach/valid_attribute.git", branch: "minitest-matchers-11"
   gem 'capybara'
 end

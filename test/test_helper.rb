@@ -52,8 +52,3 @@ class MiniTest::Rails::Integration < MiniTest::Rails::Spec
   include Capybara::DSL
   include Capybara::RSpecMatchers
 end
-
-# valid_attribute-1.2.0 + minitest-matchers_1.1.0
-class MiniTest::Rails::Model
-  include ValidAttribute::Method
-end
