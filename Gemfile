@@ -33,5 +33,6 @@ end
 
 group :test do
   gem 'minitest-matchers', '1.1.0.rc3', require: "minitest/matchers"
+  gem 'valid_attribute', '~> 1.2'
   gem 'capybara'
 end
