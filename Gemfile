@@ -39,4 +39,6 @@ group :test do
   gem 'minitest-matchers'
   gem 'valid_attribute', git: "git://github.com/wojtekmach/valid_attribute.git", branch: "minitest-matchers-11"
   gem 'capybara'
+  gem 'shoulda-matchers'
+  gem 'rr'
 end

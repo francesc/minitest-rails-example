@@ -7,6 +7,15 @@ require "rails/test_help"
 
 class MiniTest::Rails::Spec
   include ActiveSupport::Testing::Assertions
+  include RR::Adapters::MiniTest
+
+  class << self
+    alias context describe
+  end
+
+  def build_message(*args)
+    args[1].gsub(/\?/, '%s') % args[2..-1]
+  end
 end
 
 require "active_record/fixtures"
@@ -26,6 +35,7 @@ class MiniTest::Rails::Model
 end
 
 require "action_controller/test_case"
+require "shoulda/matchers/action_controller"
 
 class MiniTest::Rails::Controller
   include MiniTest::Rails::Fixtures
@@ -40,7 +50,16 @@ class MiniTest::Rails::Controller
     @request.env['PATH_INFO'] = nil
     @routes = Rails.application.routes
   end
+
+  include Shoulda::Matchers::ActionController
+  extend Shoulda::Matchers::ActionController
+
+  def subject
+    @controller
+  end
 end
+
+MiniTest::Spec.register_spec_type /Controller/, MiniTest::Rails::Controller
 
 require "action_dispatch/testing/integration"
 
