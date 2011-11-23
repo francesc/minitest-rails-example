@@ -32,6 +32,14 @@ end
 
 class MiniTest::Rails::Model
   include MiniTest::Rails::Fixtures
+
+  def subject
+    self.class.desc.new
+  end
+end
+
+MiniTest::Spec.register_spec_type MiniTest::Rails::Model do |klass|
+  klass.superclass == ActiveRecord::Base
 end
 
 require "action_controller/test_case"

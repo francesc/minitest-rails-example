@@ -1,8 +1,6 @@
 require "test_helper"
 
-class UserTest < MiniTest::Rails::Model
-  subject { User.new }
-
+describe User do
   must { have_valid(:first_name).when("Good") }
   wont { have_valid(:first_name).when(nil, "") }
 
