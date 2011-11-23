@@ -96,3 +96,28 @@ class MiniTest::Rails::Acceptance < MiniTest::Rails::Spec
   include Capybara::DSL
   include Capybara::RSpecMatchers
 end
+
+require "action_dispatch/testing/integration"
+
+class MiniTest::Rails::IntegrationTest < MiniTest::Rails::Spec
+  include MiniTest::Rails::Fixtures
+
+  include ActionDispatch::Integration::Runner
+  include ActionController::TemplateAssertions
+
+  @@app = nil
+
+  def self.app
+    # DEPRECATE Rails application fallback
+    # This should be set by the initializer
+    @@app || (defined?(Rails.application) && Rails.application) || nil
+  end
+
+  def self.app=(app)
+    @@app = app
+  end
+
+  def app
+    super || self.class.app
+  end
+end

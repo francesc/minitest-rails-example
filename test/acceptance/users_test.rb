@@ -20,7 +20,7 @@ class UsersTest < MiniTest::Rails::Acceptance
   end
 
   it "can add new user" do
-    create_user "James", "Doe"
+    create_user "James", "Doe", "james", "secret"
 
     page.must have_content("User was successfully created.")
     user = User.last
@@ -29,7 +29,7 @@ class UsersTest < MiniTest::Rails::Acceptance
   end
 
   it "can't add new user with invalid data" do
-    create_user "James", ""
+    create_user "James", "", "", ""
 
     page.must have_content("Last name can't be blank")
   end
@@ -67,9 +67,9 @@ class UsersTest < MiniTest::Rails::Acceptance
 
 private
 
-  def create_user(first_name, last_name)
+  def create_user(first_name, last_name, username, password)
     visit "/users/new"
-    set_user first_name, last_name
+    set_user first_name, last_name, username, password
     click_button "Create User"
   end
 
@@ -82,8 +82,10 @@ private
     click_button "Update User"
   end
 
-  def set_user(first_name = nil, last_name = nil)
+  def set_user(first_name = nil, last_name = nil, username = nil, password = nil)
     fill_in "First name", with: first_name if first_name
     fill_in "Last name",  with: last_name if last_name
+    fill_in "Username",  with: username if username
+    fill_in "Password",  with: password if password
   end
 end

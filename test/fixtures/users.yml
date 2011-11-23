@@ -1,7 +1,11 @@
 joe:
   first_name: Joe
   last_name: Doe
+  username: joe
+  password: secret1
 
 jane:
   first_name: Jane
   last_name: Doe
+  username: jane
+  password: secret2
