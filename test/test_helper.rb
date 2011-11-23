@@ -42,6 +42,23 @@ MiniTest::Spec.register_spec_type MiniTest::Rails::Model do |klass|
   klass.superclass == ActiveRecord::Base
 end
 
+class MiniTest::Rails::Helper
+  include ActiveSupport::Testing::SetupAndTeardown
+  include ActionView::TestCase::Behavior
+
+  def self.create(*args)
+    ret = super
+    ret.ancestors.each do |klass|
+      if klass.respond_to?(:superclass) && klass.superclass == MiniTest::Rails::Helper
+        klass.send :include_helper_modules!
+      end
+    end
+    ret
+  end
+end
+
+MiniTest::Spec.register_spec_type /Helper$/, MiniTest::Rails::Helper
+
 require "action_controller/test_case"
 require "shoulda/matchers/action_controller"
 
