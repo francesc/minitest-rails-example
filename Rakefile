@@ -6,10 +6,10 @@ require File.expand_path('../config/application', __FILE__)
 
 DummyMinitest::Application.load_tasks
 
-MINITEST_TASKS << "integration"
+MINITEST_TASKS << "acceptance"
 
 namespace :test do
-  sub = "integration"
+  sub = "acceptance"
   Rake::TestTask.new(sub => 'test:prepare') do |t|
     t.libs << 'test'
     t.pattern = "test/#{sub}/**/*_test.rb"

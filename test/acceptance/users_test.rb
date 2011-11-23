@@ -1,6 +1,6 @@
 require "test_helper"
 
-class UsersTest < MiniTest::Rails::Integration
+class UsersTest < MiniTest::Rails::Acceptance
   fixtures :users
 
   it "can view list of users" do
